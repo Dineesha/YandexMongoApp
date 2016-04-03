@@ -1,0 +1,17 @@
+body {
+    background-image: url("http://cdn.allwallpaper.in/wallpapers/1920x1080/12980/feathers-books-ancient-blurred-background-shelves-1920x1080-wallpaper.jpg");
+
+}
+.mainform{
+	background-color:#ECF8F9;
+	
+    height:600px;
+    width: 500px;
+    padding: 25px;
+    border: 25px solid #177188;
+    margin: 25px;
+    align: center;
+}
+.btn btn-warning{
+padding:5px;
+}
