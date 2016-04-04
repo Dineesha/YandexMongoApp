@@ -1,33 +1,37 @@
 package tester;
 
+import loginmongo.DomXmlParser;
+import loginmongo.LanguageTranslation;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.fail;
 
+/**
+ * Created by hsenid on 4/4/16.
+ */
 public class LanguageTranslationTest {
-
     LanguageTranslation tr = new LanguageTranslation();
-    boolean rep =false;
+    boolean reply =false;
+   // DomXmlParser translation = new DomXmlParser();
 
-    
     @DataProvider(name = "text")
     public Object[][] text() {
 
         return new Object[][]{
-                {"en", "fr", "tree","arbre"}, 
+                {"en", "fr", "tree","arbre"},
         };
     }
 
     @Test(dataProvider = "text")
-    public void testTranslation(String fromLang, String toLang, String fromText, String exp) {
+    public void testTranslation(String fromLang, String toLang, String toTranslateText, String exp) {
 
-        Translation translation = new Translation();
+        DomXmlParser translation = new DomXmlParser();
         try {
-            String rep = translation.textTranslate(fromLang, toLang, fromText);
-            Assert.assertEquals(rep, exp, "Correct translation");
-            System.out.println(fromText);
+            String trText = translation.readResponse(fromLang, toLang, toTranslateText);
+            Assert.assertEquals(trText, exp, "Correct translation");
+            System.out.println(toTranslateText);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -35,46 +39,39 @@ public class LanguageTranslationTest {
 
     @Test
     public void  conflictFromLanguage(){
+        DomXmlParser translation = new DomXmlParser();
 
         try{
-             rep= Boolean.parseBoolean(translation.textTranslate("fr", "en", "tree"));
+            reply = Boolean.parseBoolean(translation.readResponse("fr", "en", "tree"));
         }catch (Exception ex){
             fail();
         }
-        Assert.assertEquals(rep,false,"Language translated conflict");
+        Assert.assertEquals(reply,false,"Language translated conflict");
     }
 
     @Test
     public void  conflictToLanguage(){
+        DomXmlParser translation = new DomXmlParser();
 
         try{
-            rep= Boolean.parseBoolean(translation.textTranslate("en", "fr", "tree"));
+            reply = Boolean.parseBoolean(translation.readResponse("en", "fr", "tree"));
         }catch (Exception ex){
             fail();
         }
-        Assert.assertEquals(rep,false,"conflict ToLanguage");
+        Assert.assertEquals(reply,false,"conflict ToLanguage");
     }
 
     @Test
     public void  nullTranslateText(){
+        DomXmlParser translation = new DomXmlParser();
 
         try{
-            rep= Boolean.parseBoolean(translation.textTranslate("en", "fr", ""));
+            reply = Boolean.parseBoolean(translation.readResponse("en", "fr", ""));
         }catch (Exception ex){
             fail();
         }
-        Assert.assertEquals(rep,false,"null input text");
+        Assert.assertEquals(reply,false,"null input text");
     }
-   /* @Test
-    public void  invalidCharacters(){
 
-        try{
-            rep= Boolean.parseBoolean(translation.textTranslate("en", "fr", "u*6frrr"));
-        }catch (Exception ex){
-            fail();
-        }
-        Assert.assertEquals(rep,false,"Invalid Input Characters");
-    }*/
 
-  
 }

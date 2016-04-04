@@ -1,5 +1,10 @@
 package tester;
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+import loginmongo.GetApp;
+import loginmongo.Login;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -8,175 +13,107 @@ import java.sql.*;
 
 import static org.testng.Assert.fail;
 
-/**
- * Created by hsenid on 4/01/16.
- */
-public class LoginTest {
+import com.mongodb.BasicDBObject;
+import loginmongo.CreateUser;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
+import java.net.UnknownHostException;
+
+public class LoginTest {
+    /* @BeforeTest
+     public void createUser() throws UnknownHostException {
+         String un = "dinitest";
+         String pw = "test";
+         CreateUser user1 = new CreateUser();
+         user1.setPassword(pw);
+         user1.setUsername(un);
+         user1.connectToDBForTest();
+         LoginTest test = new LoginTest();
+        // test.testValidateQuery(un, pw);
+     }
+
+     @Test
+     public void testValidateQuery() {
+         System.out.println("logintest class");
+
+         //DBCollection table = db.getCollection("userinfo");
+         BasicDBObject searchQuery = new BasicDBObject();
+         searchQuery.put("username", "dinitest");
+         searchQuery.put("password", "wrong");
+         Assert.assertEquals(searchQuery, false,"password is wrong ");
+
+
+
+
+
+
+     }
+
+     @Test
+     public void test1() {
+         System.out.println("testing errors");
+     }
+
+     @AfterTest
+     public void destroyUser1(){
+
+
+     }
+      @BeforeMethod
+     public void createUsernull(){
+         CreateUser user1=new CreateUser();
+         user1.setPassword(null);
+         user1.setUsername(null);
+     }*/
     Login validate = new Login();
     boolean res = false;
 
 
-    
     public Object[][] users() {
         return new Object[][]{
-                {"abc", "123", true}, //valid username and password
-                {" ", " ", false}, // both username and password empty
-                {" ", "123", false}, // empty username, correct password
-                {"abc", " ", false}, // correct password, empty username
-                {"x", "123", false}, // wrong username, correct password
-                {"abc", "x", false}, // correct username, wrong password
-                {"ab", "xx", false} // both username and password wrong
+                {"abc", "123", true},
+                {" ", " ", false},
+                {" ", "123", false},
+                {"abc", " ", false},
+                {"x", "123", false},
+                {"abc", "x", false},
+                {"ab", "xx", false}
         };
-      
-    }*/
+
+    }
 
     @BeforeMethod
-    /**
-     *call db connection
-     *insert a user to db
-     */
-    public void setConnection() {
+
+    public void setConnection() throws UnknownHostException {
 
         GetApp prop2 = new GetApp();
 
-        String dburl = prop2.getproperty("db.url"); 
+        String dburl = prop2.getProperty("db.url");
         String database = prop2.getproperty("db.database");
-        String dbUname = prop2.getproperty("db.username"); 
+        String dbUname = prop2.getproperty("db.username");
         String dbPasswd = prop2.getproperty("db.password");
- MongoClient mongo = new MongoClient("localhost", 27017);
+        MongoClient mongo = new MongoClient("localhost", 27017);
 
-            /**** Get database ****/
+        /**** Get database ****/
 
-            DB db = mongo.getDB("logindata");
+        DB db = mongo.getDB("logindata");
 
-            /**** Get collection / table from 'testdb' ****/
+        /**** Get collection / table from 'testdb' ****/
 
-            DBCollection table = db.getCollection("userinfo");
+        DBCollection table = db.getCollection("userinfo");
 
-            /**** Insert ****/
+        /**** Insert ****/
 
            /* BasicDBObject document = new BasicDBObject();
             document.put("username", "dineesha");
             document.put("password", "1234");*/
 
-            String user1=table.insert(document);
-
-            
-
-        try {
-            PreparedStatement sta = conn.prepareStatement(user1);
-            sta.executeUpdate(user1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+        String user1 = table.insert(document);
 
 
-    public void userTest(String username, String password, boolean exp) {
-        Login validate = new Login();
-        try {
-            //boolean val = validate.loginValidate(uname, pass);
-            Assert.assertEquals(act, exp);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-   /* @Test
-    public void  validUserPass(){
-
-        try{
-            res=validate.loginValidate("abc","123");
-        }catch (Exception ex){
-            fail();
-        }
-        Assert.assertEquals(res,true,"Valid username and Valid password");
-    }
-
-    @Test
-    public void invalidUserPass(){
-
-        try{
-            res =validate.loginValidate("aBc","765");
-        }catch (Exception ex2){
-            fail();
-        }
-        Assert.assertEquals(res,false,"Invalid username and Invalid password");
-    }
-
-    @Test
-    public void validUn_InvalidPw(){
-
-        try{
-            res=validate.loginValidate("abc","111");
-        }catch (Exception ex3){
-            fail();
-        }
-        Assert.assertEquals(res,false,"Valid username but Invalid password");
-    }
-
-    @Test
-    public void invalidUn_ValidPw(){
-
-        try{
-            res= validate.loginValidate("Abc","123");
-        }catch (Exception ex4){
-            fail();
-        }
-        Assert.assertEquals(res,false,"Invalid username but Valid password");
-    }
-
-    @Test
-    public void emptyUn_ValidPw(){
-
-        try{
-            res=validate.loginValidate("","123");
-        }catch (Exception ex){
-            fail();
-        }
-        Assert.assertEquals(res,false,"Empty username and Valid password");
-    }
-
-    @Test
-    public void validUn_emptyPw(){
-
-        try{
-            res=validate.loginValidate("abc","");
-        }catch (Exception ex){
-            fail();
-        }
-        Assert.assertEquals(res,false,"Valid username but Empty password");
-    }
-
-    @Test
-    public void emptyUn_emptyPw(){
-
-        try{
-            res=validate.loginValidate("","");
-        }catch (Exception ex){
-            fail();
-        }
-        Assert.assertEquals(res,false,"Empty username and Password");
-    }
-
-    @AfterMethod
-    /**
-     *delete added user
-     *connection close
-     */
-    public void conClose() {
-        Connection conn = Database.getConn();
-
-        String sql = "DELETE FROM tbl_user WHERE usrName='abc' AND usrPass=md5('123');";
-        if (conn != null) {
-            try {
-                PreparedStatement sta = conn.prepareStatement(sql);
-                sta.executeUpdate(sql);
-                conn.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }*/
     }
 }
