@@ -4,6 +4,8 @@ package loginmongo;
  * Created by hsenid on 3/16/16.
  */
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -13,30 +15,30 @@ import java.io.InputStream;
 
 public class DomXmlParser {
 
-	
+	final static Logger logger = Logger.getLogger(DomXmlParser.class);
+
 
 	public String readResponse(InputStream input) throws Exception {
 
+		BasicConfigurator.configure();
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(input);
-		
 
 
-		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
+		logger.info("Root element :" + doc.getDocumentElement().getNodeName());
+//Get text element extracted from  response
 		NodeList nList = doc.getElementsByTagName("text");
 
-		System.out.println("----------------------------");
-		// ArrayList<String> listValues = new ArrayList<String>();
 
-		// String
-		// passValue=String.valueOf(listValues.add(nList.item(0).getAttributes().getNamedItem("text").getNodeValue()));
+
 		String passValue = nList.item(0).getTextContent();
 
-		System.out.println(passValue);
+		logger.info(passValue);
 		return passValue;
+
 
 	}
 }

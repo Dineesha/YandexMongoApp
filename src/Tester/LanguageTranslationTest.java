@@ -6,6 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
 import static org.testng.Assert.fail;
 
 /**
@@ -28,8 +32,12 @@ public class LanguageTranslationTest {
     public void testTranslation(String fromLang, String toLang, String toTranslateText, String exp) {
 
         DomXmlParser translation = new DomXmlParser();
+        InputStream stream1 = new ByteArrayInputStream(fromLang.getBytes(StandardCharsets.UTF_8));
+        InputStream stream2 = new ByteArrayInputStream(toLang.getBytes(StandardCharsets.UTF_8));
+        InputStream stream3 = new ByteArrayInputStream(toTranslateText.getBytes(StandardCharsets.UTF_8));
+
         try {
-            String trText = translation.readResponse(fromLang, toLang, toTranslateText);
+            String trText = translation.readResponse(stream1);
             Assert.assertEquals(trText, exp, "Correct translation");
             System.out.println(toTranslateText);
         } catch (Exception ex) {
@@ -40,9 +48,11 @@ public class LanguageTranslationTest {
     @Test
     public void  conflictFromLanguage(){
         DomXmlParser translation = new DomXmlParser();
-
+        InputStream stream1 = new ByteArrayInputStream("fr".getBytes(StandardCharsets.UTF_8));
+        InputStream stream2 = new ByteArrayInputStream("en".getBytes(StandardCharsets.UTF_8));
+        InputStream stream3 = new ByteArrayInputStream("tree".getBytes(StandardCharsets.UTF_8));
         try{
-            reply = Boolean.parseBoolean(translation.readResponse("fr", "en", "tree"));
+            reply = Boolean.parseBoolean(translation.readResponse(stream1));
         }catch (Exception ex){
             fail();
         }
@@ -52,9 +62,11 @@ public class LanguageTranslationTest {
     @Test
     public void  conflictToLanguage(){
         DomXmlParser translation = new DomXmlParser();
-
+        InputStream stream1 = new ByteArrayInputStream("en".getBytes(StandardCharsets.UTF_8));
+        InputStream stream2 = new ByteArrayInputStream("fr".getBytes(StandardCharsets.UTF_8));
+        InputStream stream3 = new ByteArrayInputStream("tree".getBytes(StandardCharsets.UTF_8));
         try{
-            reply = Boolean.parseBoolean(translation.readResponse("en", "fr", "tree"));
+            reply = Boolean.parseBoolean(translation.readResponse(stream1));
         }catch (Exception ex){
             fail();
         }
@@ -64,9 +76,11 @@ public class LanguageTranslationTest {
     @Test
     public void  nullTranslateText(){
         DomXmlParser translation = new DomXmlParser();
-
+        InputStream stream1 = new ByteArrayInputStream("en".getBytes(StandardCharsets.UTF_8));
+        InputStream stream2 = new ByteArrayInputStream("fr".getBytes(StandardCharsets.UTF_8));
+        InputStream stream3 = new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8));
         try{
-            reply = Boolean.parseBoolean(translation.readResponse("en", "fr", ""));
+            reply = Boolean.parseBoolean(translation.readResponse(stream1));
         }catch (Exception ex){
             fail();
         }

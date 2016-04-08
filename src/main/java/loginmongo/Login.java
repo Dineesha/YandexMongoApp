@@ -5,6 +5,9 @@ package loginmongo;
  */
 
 import com.mongodb.*;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.testng.annotations.Parameters;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,41 +18,24 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 public class Login extends HttpServlet {
+    final static Logger logger = Logger.getLogger(HttpClientCall.class);
 
     @Override
     public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws IOException, ServletException {
-
+                       HttpServletResponse response) throws UnknownHostException {
+        BasicConfigurator.configure();
         response.setContentType("text/html");
 
         String username = request.getParameter("form-username"); // get the name entered by user's input
         String password = request.getParameter("form-password"); //get the password entered by user's input
 
 
-        try {
-
-            /**** Connect to MongoDB ****/
-
-            MongoClient mongo = new MongoClient("localhost", 27017);
-
-            /**** Get database ****/
-
-            DB db = mongo.getDB("logindata");
-
-            /**** Get collection / table from 'testdb' ****/
-
-            DBCollection table = db.getCollection("userinfo");
-
-            /**** Insert ****/
-
-           /* BasicDBObject document = new BasicDBObject();
-            document.put("username", "dineesha");
-            document.put("password", "1234");
-
-            table.insert(document);*/
+        MongoClient mongo = new MongoClient("localhost", 27017);
+        DB db = mongo.getDB("logindata");
+        DBCollection table = db.getCollection("userinfo");
 
             /**** Find and display ****/
-            BasicDBObject searchQuery = new BasicDBObject();
+        BasicDBObject searchQuery = new BasicDBObject();
             searchQuery.put("username", username);
             searchQuery.put("password", password);
 
@@ -58,18 +44,33 @@ public class Login extends HttpServlet {
             if (cursor.hasNext()) {
 
 
-                response.sendRedirect("success.jsp?name="+username);
+                try {
+                    response.sendRedirect("success.jsp?name=" + username);
+                } catch (IOException e) {
+                    String er1=e.getMessage();
+                    logger.error("Exception thrown  :\" + e");
+                    logger.trace("exception :\" +er1");
+                }
+
             } else {
                 request.setAttribute("errorMessage", "Invalid username or password");
                 RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-                rd.include(request, response);
+                try {
+                    rd.include(request, response);
+                } catch (ServletException e) {
+                    e.printStackTrace();  String er1=e.getMessage();
+                    logger.error("Exception thrown  :\" + e");
+                    logger.trace("exception :\" +er1");
+                } catch (IOException e) {
+                    String er1=e.getMessage();
+                    logger.error("Exception thrown  :\" + e");
+                    logger.trace("exception :\" +er1");
+                }
             }
-        } catch (UnknownHostException ex) {
-            ex.printStackTrace();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+
 
         }
     }
-}
+
+

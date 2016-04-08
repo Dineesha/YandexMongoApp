@@ -8,12 +8,16 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 import javax.net.ssl.HostnameVerifier;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class HttpClientCall {
     private final String USER_AGENT = "Mozilla/5.0";
+    final static Logger logger = Logger.getLogger(HttpClientCall.class);
 
     public static void main(String[] args) throws Exception {
 
@@ -28,8 +32,8 @@ public class HttpClientCall {
     }
 
     // HTTP GET request
-    public  InputStream sendGet(String apiUrl) throws Exception {
-
+    public  InputStream sendGet(String apiUrl) throws IOException {
+        BasicConfigurator.configure();
         //handle ssl socket exception
         HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
         SchemeRegistry registry;
@@ -47,20 +51,27 @@ public class HttpClientCall {
         // add request header
         request.addHeader("User-Agent", USER_AGENT);
 
-        HttpResponse response = client.execute(request);
+        HttpResponse response = null;
+        try {
+            response = client.execute(request);
+        } catch (IOException e) {
+            e.printStackTrace();
 
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " +
+        }
+
+        logger.info("\nSending 'GET' request to URL : " + url);
+        logger.info("Response Code : " +
                 response.getStatusLine().getStatusCode());
         //InputStream input = response.getEntity().getContent();
-        InputStream input = response.getEntity().getContent();
-        
-        
+        InputStream input = null;
+
+        input = response.getEntity().getContent();
+
+
+
         return input;
-        
-        /*DomXmlParser dom = new DomXmlParser();
-        return (dom.readResponse(input));*/
-//return response;///set this to txtbox
+
+
 
 
     }

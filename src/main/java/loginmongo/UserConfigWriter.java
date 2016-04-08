@@ -8,9 +8,9 @@ import java.util.Properties;
 /**
  * Created by hsenid on 3/28/16.
  */
-public class GetApp {
-    public static void main(String[] args) throws IOException {
+public class UserConfigWriter {
 
+public void getPropertyConfig(){
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -21,11 +21,11 @@ public class GetApp {
             // load a properties file
             prop.load(input);
 
-            // get the property value and print it out
-            System.out.println(prop.getProperty("DB"));
-            System.out.println(prop.getProperty("DBCollection"));
-            System.out.println(prop.getProperty("username"));
-            System.out.println(prop.getProperty("password"));
+            // get the property value
+            prop.getProperty("DB");
+            prop.getProperty("DBCollection");
+            prop.getProperty("username");
+            prop.getProperty("password");
 
         } catch (IOException ex) {
             ex.printStackTrace();

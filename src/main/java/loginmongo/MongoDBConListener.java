@@ -6,6 +6,8 @@ package loginmongo;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -16,9 +18,11 @@ public class MongoDBConListener implements ServletContextListener {
 
     static MongoClient cl = null;
     static DBCollection col = null;
+    final static Logger logger = Logger.getLogger(MongoDBConListener.class);
 
     //@Override
     public void contextInitialized(ServletContextEvent sce) {
+        BasicConfigurator.configure();
         /**
          * establish database connection
          */
@@ -31,8 +35,8 @@ public class MongoDBConListener implements ServletContextListener {
             col = db.getCollection(ctx.getInitParameter("MONGO_COLLECTION"));
 
         } catch (UnknownHostException e) {
-
-            throw new RuntimeException("MongoDBClient initialization failed");
+            logger.info("MongoDBClient initialization failed");
+            //throw new RuntimeException("MongoDBClient initialization failed");
         }
     }
 

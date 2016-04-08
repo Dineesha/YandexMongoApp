@@ -24,7 +24,8 @@
 
 
     </head>
-<body>
+<body align="right">
+
 <div class="top-content">
 <label style="align:left"> <h3 style="color:white">You are logged in as  <%=request.getParameter("name")%></h3></label>
             <div class="inner-bg">
@@ -126,7 +127,7 @@
 
 
         <%
-        out.println("<textarea name=\"txttranslatefrom\">");
+        out.println("<textarea id=\"txtarea1\" name=\"txttranslatefrom\">");
         String st3=(String)request.getAttribute("txttranslatefrom");
         if(st3!=null){
         	out.println(st3);
@@ -218,7 +219,7 @@
 
 
 
-        <textarea class="form-username form-control" rows="4" cols="50" name=txttranslateto>
+        <textarea class="form-username form-control" rows="4" cols="50" id="txtarea2" name=txttranslateto>
         <% String st=(String)request.getAttribute("passValue");
         if(st!=null){
         	out.println(st);
@@ -237,22 +238,30 @@
 
 
     <!--<button type="reset" value="Reset">Reset</button></div>-->
+ <script>
+function swapValues(){
+var tmp = document.getElementById("txtarea1").value;
+document.getElementById("txtarea1").value = document.getElementById("txtarea2").value;
+document.getElementById("txtarea2").value = tmp;
 
+}
+</script>
 
-
+<input type="button" class="btn btn-primary" id="go" onclick="swapValues()" value="Swap">
 </form>
  <div style="padding:30px" > <a href=" http://translate.yandex.com/">Powered by Yandex.Translate</a></div>
 
 
 <form  class="class="col-sm-2 col-sm-offset-2 text" id="logout" method="link" action="logoutprocess.jsp">
 
-    <body align="right">
+    
 
         <input class="btn btn-warning" type="submit" value="Logout"></form>
 <script src="assets/js/jquery-1.11.1.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
      <script src="assets/js/jquery.backstretch.min.js"></script>
         <script src="assets/js/scripts.js"></script>
+
 </div>
 </body>
 </html>

@@ -1,25 +1,11 @@
 package tester;
 
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
-import loginmongo.GetApp;
+import loginmongo.UserConfigWriter;
 import loginmongo.Login;
-import org.testng.Assert;
-import org.testng.annotations.*;
-
-import javax.servlet.ServletException;
-import java.sql.*;
 
 import static org.testng.Assert.fail;
 
-import com.mongodb.BasicDBObject;
-import loginmongo.CreateUser;
-import org.testng.Assert;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 import java.net.UnknownHostException;
 
@@ -73,14 +59,14 @@ public class LoginTest {
     boolean res = false;
 
 
-    public Object[][] users() {
+    public Object[][] loggedUser() {
         return new Object[][]{
-                {"abc", "123", true},
+                {"a", "1", true},
                 {" ", " ", false},
-                {" ", "123", false},
-                {"abc", " ", false},
-                {"x", "123", false},
-                {"abc", "x", false},
+                {" ", "1", false},
+                {"a", " ", false},
+                {"x", "1", false},
+                {"a", "x", false},
                 {"ab", "xx", false}
         };
 
@@ -90,9 +76,9 @@ public class LoginTest {
 
     public void setConnection() throws UnknownHostException {
 
-        GetApp prop2 = new GetApp();
+        UserConfigWriter prop2 = new UserConfigWriter();
 
-        String dburl = prop2.getProperty("db.url");
+      /*  String dburl = prop2.getProperty("db.url");
         String database = prop2.getproperty("db.database");
         String dbUname = prop2.getproperty("db.username");
         String dbPasswd = prop2.getproperty("db.password");
@@ -100,19 +86,19 @@ public class LoginTest {
 
         /**** Get database ****/
 
-        DB db = mongo.getDB("logindata");
+      ///  DB db = mongo.getDB("logindata");
 
         /**** Get collection / table from 'testdb' ****/
 
-        DBCollection table = db.getCollection("userinfo");
+       /// DBCollection table = db.getCollection("userinfo");
 
         /**** Insert ****/
 
            /* BasicDBObject document = new BasicDBObject();
-            document.put("username", "dineesha");
-            document.put("password", "1234");*/
+            document.put("username", "a");
+            document.put("password", "1");*/
 
-        String user1 = table.insert(document);
+       /// String user1 = table.insert(document);
 
 
     }

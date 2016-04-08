@@ -8,8 +8,8 @@ import java.util.Properties;
 /**
  * Created by hsenid on 3/28/16.
  */
-public class App {
-    public static void main(String[] args) throws IOException {
+public class UserConfigSet {
+   public void setUserConfig() throws IOException {
 
         Properties prop = new Properties();
         OutputStream output = null;
