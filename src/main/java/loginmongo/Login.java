@@ -30,15 +30,7 @@ public class Login extends HttpServlet {
         String username = request.getParameter("form-username"); // get the name entered by user's input
         String password = request.getParameter("form-password"); //get the password entered by user's input
 
-     ComboPooledDataSource cpds = new ComboPooledDataSource();
-        try {
-            cpds.setDriverClass("org.postgresql.Driver"); //loads the jdbc driver
-        } catch (PropertyVetoException e) {
-            e.printStackTrace();
-        }
-        //cpds.setJdbcUrl( "jdbc:postgresql://localhost/testdb" );
-        cpds.setUser("dbuser");
-        cpds.setPassword("dbpassword");
+     
         MongoClient mongo = new MongoClient("localhost", 27017);
         DB db = mongo.getDB("logindata");
         DBCollection table = db.getCollection("userinfo");
