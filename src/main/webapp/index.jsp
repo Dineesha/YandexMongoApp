@@ -70,6 +70,9 @@
 			                        	<input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
 			                        </div>
 			                        <button type="submit" class="btn">Log In</button>
+			                         <div style="margin: 8px">
+                                    <button type="submit" class="btn" onclick="window.location='signup.jsp'" >Sign Up</button>
+                                    </div>
 			                    </form>
 		                    </div>
                         </div>
