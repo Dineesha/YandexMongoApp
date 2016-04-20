@@ -69,6 +69,9 @@
               <div class="form-group">
                 <input type="text" name="email" class="form-control" placeholder="example@domain.com">
                 </div>
+                <div class="form-group">
+                <input type="text" name="phonenumber" class="form-control" placeholder="Enter your phone number">
+              </div>
 
               <div class="form-group" style="position:relative;width:200px;height:25px;border:0;padding:0;margin:10px;">
                 <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;" onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
