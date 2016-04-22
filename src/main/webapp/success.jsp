@@ -25,7 +25,21 @@
 
     </head>
 <body align="right">
+<div class="container">
 
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Home</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">User Panel <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="signup.jsp">Add User</a></li>
+                <li><a href="searchuser.jsp">Search</a></li>
+            </ul>
+        </li>
+
+    </ul>
+
+</div>
 <div class="top-content">
 <label style="align:left"> <h3 style="color:white">You are logged in as  <%=request.getParameter("name")%></h3></label>
             <div class="inner-bg">
