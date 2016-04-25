@@ -30,6 +30,21 @@
 </head>
 <body>
 <div class="top-content">
+  <div class="container">
+   <nav class = "navbar navbar-inverse navbar-static-top" role = "navigation">
+    <ul class="nav nav-tabs">
+      <li><a href="#">Translate</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">User Panel <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="signup.jsp">Add User</a></li>
+          <li><a href="searchuser.jsp">Search</a></li>
+        </ul>
+      </li>
+
+    </ul>
+    </nav>
+  </div>
 
 
   <div class="inner-bg">
@@ -57,13 +72,30 @@
                 <label class="sr-only">searchname</label>
                 <input type="text" name="form-searchname" placeholder="Search name here ..." class="form-firstname form-control" id="form-searchname" >
 
-
-
-
               </div>
+</form>
+            <form role="form" action="Login" method="post" class="search-form">
+
+
               <button type="submit" class="btn">search</button>
 
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
 
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>DOB</th>
+                    <th>Country</th>
+                    <th>E-mail</th>
+                    <th>Username</th>
+
+                  </tr>
+                  </thead>
+
+                </table>
+              </div>
             </form>
           </div>
         </div>
