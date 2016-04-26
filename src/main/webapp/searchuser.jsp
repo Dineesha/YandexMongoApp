@@ -81,8 +81,7 @@
 
               <div class="table-responsive">
                 <table class="table">
-                  <thead>
-                  <tr>
+                  
 
                     <th>Firstname</th>
                     <th>Lastname</th>
@@ -91,10 +90,18 @@
                     <th>E-mail</th>
                     <th>Username</th>
 
-                  </tr>
-                  </thead>
 
                 </table>
+              </div>
+              <div class="col-md-6">
+
+                <ul class="pagination">
+                  <li class="active"><a href="#">1</a></li>
+                  <li ><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">4</a></li>
+                  <li><a href="#">5</a></li>
+                </ul>
               </div>
             </form>
           </div>
