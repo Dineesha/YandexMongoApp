@@ -9,7 +9,6 @@
 <html>
 <head>
 
-  <link rel="stylesheet" type="text/css" href="successDesign.css">
 
 
   <meta charset="utf-8">
@@ -22,19 +21,55 @@
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <!-- <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">-->
   <link rel="stylesheet" href="assets/css/form-elements.css">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" type="text/css" href="successDesign.css">
 
 
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+ <script type="text/javascript" src="assets/js/date.js"></script>
+    <script src="assets/js/date.js"> </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-  <link rel="shortcut icon" href="assets/ico/favicon.png">
+   <!-- <script src="jquery.date-dropdowns.min.js"></script>-->
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
 
-  <title>Sign Up</title>
+
+    <title>Sign Up</title>
+    <script type="text/javascript">
+
+        /***********************************************
+         * Drop Down Date select script- by JavaScriptKit.com
+         * This notice MUST stay intact for use
+         * Visit JavaScript Kit at http://www.javascriptkit.com/ for this script and more
+         ***********************************************/
+
+        var monthtext=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
+
+        function populatedropdown(dayfield, monthfield, yearfield){
+            var today=new Date()
+            var dayfield=document.getElementById(dayfield)
+            var monthfield=document.getElementById(monthfield)
+            var yearfield=document.getElementById(yearfield)
+            for (var i=0; i<31; i++)
+                dayfield.options[i]=new Option(i, i+1)
+            dayfield.options[today.getDate()]=new Option(today.getDate(), today.getDate(), true, true) //select today's day
+            for (var m=0; m<12; m++)
+                monthfield.options[m]=new Option(monthtext[m], monthtext[m])
+            monthfield.options[today.getMonth()]=new Option(monthtext[today.getMonth()], monthtext[today.getMonth()], true, true) //select today's month
+            var thisyear=today.getFullYear()
+            for (var y=0; y<100; y++){
+                yearfield.options[y]=new Option(thisyear, thisyear)
+                thisyear-=1
+            }
+            yearfield.options[0]=new Option(today.getFullYear(), today.getFullYear(), true, true) //select today's year
+        }
+
+    </script>
 </head>
 <body>
 <div class="top-content">
+
 
   <div class="inner-bg">
     <div class="container">
@@ -56,25 +91,43 @@
             </div>
           </div>
           <div class="form-bottom">
-            <form role="form" action="Login" method="post" class="signup-form">
+            <form role="form" action="Registration" method="post" class="signup-form">
               <div class="form-group">
-                <label class="sr-only">firstname</label>
-                <input type="text" name="form-fname" placeholder="first name..." class="form-firstname form-control" id="form-fname" size="25">
+                <label class="sr-only">firstname :</label>
+                <input type="text" name="fname" placeholder="first name..."  id="form-fname" size="25" required>
               </div>
               <div class="form-group">
-                <label class="sr-only">lastname</label>
-                <input type="text" name="form-lname" placeholder="last name..." class="form-lastname form-control" id="form-lname">
+                <label class="sr-only">lastname :</label>
+                <input type="text" name="lname" placeholder="last name..." class="form-lastname form-control" id="form-lname">
               </div>
-<script> $('#defaultPopup,#defaultInline').datepick();</script>
+<!--<script> $('#defaultPopup,#defaultInline').datepick();</script>-->
+
               <div class="form-group">
-                <input type="text" name="email" class="form-control" placeholder="example@domain.com">
+                <input type="text" name="email" class="form-control" placeholder="example@domain.com" required>
                 </div>
-                <div class="form-group">
-                <input type="text" name="phonenumber" class="form-control" placeholder="Enter your phone number">
+                <form action="" name="someform">
+                    <select id="daydropdown">
+                    </select>
+                    <select id="monthdropdown">
+                    </select>
+                    <select id="yeardropdown">
+                    </select>
+                </form>
+
+                <script type="text/javascript">
+
+                    //populatedropdown(id_of_day_select, id_of_month_select, id_of_year_select)
+                    window.onload=function(){
+                        populatedropdown("daydropdown", "monthdropdown", "yeardropdown")
+                    }
+                </script>
+
+              <div class="form-group">
+                <input type="text" name="phonenumber" class="form-control" placeholder="Enter your phone number" required>
               </div>
 
               <div class="form-group" style="position:relative;width:200px;height:25px;border:0;padding:0;margin:10px;">
-                <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;" onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+                <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;" onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;" >
                   <option></option>
                   <option value="sl">Sri Lanka</option>
                   <option value="jp">Japan</option>
@@ -82,23 +135,24 @@
                   <option value="jp">Korea</option>
                   <option value="en">USA</option>
                 </select>
-                <input name="displayValue" placeholder="Select Your Country" id="displayValue" style="position:absolute;top:0px;left:0px;width:183px;width:180px\9;#width:180px;height:23px; height:21px\9;#height:18px;border:1px solid #556;" onfocus="this.select()" type="text">
+                <input name="country" placeholder="Select Your Country" id="displayValue" style="position:absolute;top:0px;left:0px;width:183px;width:180px\9;#width:180px;height:23px; height:21px\9;#height:18px;border:1px solid #556;" onfocus="this.select()" type="text" required>
                 <input name="idValue" id="idValue" type="hidden">
               </div>
 
               <div class="form-group">
                 <label class="sr-only">Username</label>
-                <input type="text" name="form-name" placeholder="username..." class="form-username form-control" id="form-uname" >
+                <input type="text" name="uname" placeholder="username..." class="form-username form-control" id="form-uname" required>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-password">Password</label>
-                <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+                <label class="sr-only" for="form-password" >Password</label>
+                <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-password">Re-enterPassword</label>
-                <input type="password" name="form-password" placeholder="Re-enter Password..." class="form-password form-control" id="form-conpassword">
+                <input type="password" name="form-password" placeholder="Re-enter Password..." class="form-password form-control" id="form-conpassword" required>
               </div>
-              <button type="submit" class="btn">Register</button>
+                <button type="submit" class="btn">Register</button>
+
 
 
             </form>
@@ -118,8 +172,6 @@
 <script src="assets/js/jquery.backstretch.min.js"></script>
 <script src="assets/js/scripts.js"></script>
 
-
 <a href=" http://translate.yandex.com/">Powered by Yandex.Translate</a>
 </body>
 </html>
-
