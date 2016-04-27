@@ -32,13 +32,14 @@ public class Login extends HttpServlet {
 
      
         MongoClient mongo = new MongoClient("localhost", 27017);
-        DB db = mongo.getDB("logindata");
-        DBCollection table = db.getCollection("userinfo");
-
-            /**** Find and display ****/
+       // DB db = mongo.getDB("logindata");
+       // DBCollection table = db.getCollection("userinfo");
+        DB db = mongo.getDB("login_form");
+        DBCollection table = db.getCollection("test_user1");
+        /**** Find and display ****/
         BasicDBObject searchQuery = new BasicDBObject();
-            searchQuery.put("username", username);
-            searchQuery.put("password", password);
+        searchQuery.put("username", username);
+        searchQuery.put("password", password);
 
             DBCursor cursor = table.find(searchQuery);
 
