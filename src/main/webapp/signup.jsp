@@ -5,6 +5,7 @@
   Time: 3:39 PM
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -33,7 +34,6 @@
 
    <!-- <script src="jquery.date-dropdowns.min.js"></script>-->
     <link rel="shortcut icon" href="assets/ico/favicon.png">
-
 
     <title>Sign Up</title>
     <script type="text/javascript">
@@ -67,7 +67,22 @@
 
     </script>
 </head>
-<body>
+<body onload='document.form1.fname.focus()'>
+<div class="container">
+    <nav class = "navbar navbar-inverse navbar-fixed-top" role = "navigation">
+        <ul class="nav navbar-nav">
+            <li ><a href="success.jsp">Translate</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle-active" data-toggle="dropdown" href="#">User Panel <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Add User</a></li>
+                    <li><a href="searchuser.jsp">Search</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+</div>
 <div class="top-content">
 
 
@@ -90,8 +105,9 @@
               <i class="fa fa-lock"></i>
             </div>
           </div>
-          <div class="form-bottom">
-            <form role="form" action="Registration" method="post" class="signup-form">
+            <form role="form" name="form1" action="Registration" method="post" class="signup-form">
+
+            <div class="form-bottom">
               <div class="form-group">
                 <label class="sr-only">firstname :</label>
                 <input type="text" name="fname" placeholder="first name..."  id="form-fname" size="25" required>
@@ -110,7 +126,7 @@
                     </select>
                     <select id="monthdropdown">
                     </select>
-                    <select id="yeardropdown">
+                    <select name="datepick" id="yeardropdown">
                     </select>
                 </form>
 
@@ -132,8 +148,8 @@
                   <option value="sl">Sri Lanka</option>
                   <option value="jp">Japan</option>
                   <option value="en">England</option>
-                  <option value="jp">Korea</option>
-                  <option value="en">USA</option>
+                  <option value="kr">Korea</option>
+                  <option value="us">USA</option>
                 </select>
                 <input name="country" placeholder="Select Your Country" id="displayValue" style="position:absolute;top:0px;left:0px;width:183px;width:180px\9;#width:180px;height:23px; height:21px\9;#height:18px;border:1px solid #556;" onfocus="this.select()" type="text" required>
                 <input name="idValue" id="idValue" type="hidden">
@@ -150,10 +166,12 @@
               <div class="form-group">
                 <label class="sr-only" for="form-password">Re-enterPassword</label>
                 <input type="password" name="form-password" placeholder="Re-enter Password..." class="form-password form-control" id="form-conpassword" required>
+
               </div>
-                <button type="submit" class="btn">Register</button>
+                <button type="submit" class="btn" onclick="allLetter(document.form1.fname)" >Register</button>
 
-
+</div>
+                <script src="js/date.js"></script>
 
             </form>
           </div>
