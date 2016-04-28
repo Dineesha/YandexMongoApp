@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -19,7 +20,7 @@ import java.util.Set;
 public class SearchServlet extends HttpServlet {
     final static Logger logger = Logger.getLogger(SearchServlet.class);
 
-    public void doPost(HttpServletRequest request,HttpServletResponse response) throws UnknownHostException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String searchName = request.getParameter("form-searchname");
         /*try {
         Class.forName("com.mysql.jdbc.Driver");
@@ -47,48 +48,57 @@ public class SearchServlet extends HttpServlet {
         DBCursor cursor = table.find(searchQuery);
 
         if (cursor.hasNext()) {
+            //response.sendRedirect("index.jsp?name=");
+            request.setAttribute("searchMessage", "1");
 
 
-            try {
+
+
+                RequestDispatcher rd = request.getRequestDispatcher("/searchuser.jsp");
+
+                rd.include(request, response);
+
+
+
+           /* try {
                 Set<String> BasicDBObject = db.getCollectionNames();
 
                 for (String collectionName : BasicDBObject) {
-                   // System.out.println(collectionName);
+                    // System.out.println(collectionName);
                     logger.info(collectionName);
                 }
 
                 // get a single collection
-               // System.out.println(table.toString());
-logger.info(table.toString());
+                // System.out.println(table.toString());
+                logger.info("Get the result values" + table.toString());
                 //System.out.println("Done");
 
-                response.sendRedirect("index.jsp?name=");
             } catch (IOException e) {
                 String er1 = e.getMessage();
-                logger.error("Exception thrown  :\" + e");
-                logger.trace("exception :\" +er1");
+                logger.error("Exception thrown  :\" , er1");
+                // logger.trace("exception :\" +er1");
+            }*/
+
+            }else{
+                request.setAttribute("errorMessage", "No results found !");
+                RequestDispatcher rd = request.getRequestDispatcher("/searchuser.jsp");
+                try {
+                    rd.include(request, response);
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                    String er1 = e.getMessage();
+                    logger.error("Exception thrown  :\" + e");
+                    //logger.trace("exception :\" +er1");
+                } catch (IOException e) {
+                    String er1 = e.getMessage();
+                    logger.error("Exception thrown  :\" + e");
+                    // logger.trace("exception :\" +er1");
+                }
             }
 
-        } else {
-            request.setAttribute("errorMessage", "Invalid username or password");
-            RequestDispatcher rd = request.getRequestDispatcher("/success.jsp");
-            try {
-                rd.include(request, response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-                String er1 = e.getMessage();
-                logger.error("Exception thrown  :\" + e");
-                logger.trace("exception :\" +er1");
-            } catch (IOException e) {
-                String er1 = e.getMessage();
-                logger.error("Exception thrown  :\" + e");
-                logger.trace("exception :\" +er1");
-            }
         }
-
 
     }
 
-}
 
 
